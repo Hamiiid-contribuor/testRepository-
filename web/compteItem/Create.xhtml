@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListCommandeTitle}"></h:outputText>
+        </ui:define>
+
+
+        <ui:define name="body">
+            <h:form id="koko">
+                <p:fieldset legend="Budget Entite Administratif : "  style="margin-bottom:20px"  >
+                    <p:panelGrid columns="5" >
+                        <p:outputLabel value="Annee" for="annee" />
+                        <p:selectOneMenu id="annee" value="#{compteItemController.annee}" >
+                            <f:selectItem itemValue="2016" itemLabel="2016"/>
+                            <f:selectItem itemValue="2015" itemLabel="2015"/>
+                            <f:selectItem itemValue="2014" itemLabel="2014"/>
+                            <f:selectItem itemValue="2013" itemLabel="2013"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="BudgetEnstite : " for="budgetEntite" />
+                        <p:inputText id="budgetEntite" value="#{compteItemController.findMontantAffecterBudgetByAnnee()}" title="BudgetEnstite" />
+
+                        <p:commandButton actionListener="#{compteItemController.create}" value="Find "/>
+
+                    </p:panelGrid>
+                </p:fieldset>
+            </h:form>
+
+            <h:form id="CompteItemCreateForm">
+                <p:fieldset legend="Affectation Compte : "  style="margin-bottom:20px"  >
+                    <p:panelGrid columns="2" >
+                        <p:outputLabel value="Montant Affecter : " for="montantAffecter" />
+                        <p:inputText id="montantAffecter" value="#{compteItemController.selected.montantAffecte}" title="Montant Affecter" />
+                        <p:outputLabel value="Montant Payer : " for="montantPayer" />
+                        <p:inputText id="montantPayer" value="#{compteItemController.selected.montantPaye}" title="Montant Payer" />
+                        <p:outputLabel value="Montant Engager  : " for="montantEngager" />
+                        <p:inputText id="montantEngager" value="#{compteItemController.selected.montantEngage}" title="Montant Engager" />
+                        <p:outputLabel style="display:block;width:70px"  value="Description  : " for="description" />
+                        <p:inputText id="description" value="#{compteItemController.selected.description}" title="Commentaire" />
+
+                        <p:commandButton actionListener="#{compteItemController.create}" value="Create"/>
+
+                    </p:panelGrid>
+                </p:fieldset>
+            </h:form>
+
+
+            <h:form id="CompteItemListForm">
+                <p:panel header="List Compte Item">
+                    <p:dataTable id="datalist" value="#{compteItemController.items}" var="item"
+                                 scrollable="true" scrollHeight="170"
+                                 resizableColumns="true" style="margin-top: 0"
+                                 >
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompteItemTitle_montantAffecte}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montantAffecte}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompteItemTitle_montantEngage}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montantEngage}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompteItemTitle_montantPaye}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.montantPaye}"/>
+                        </p:column>
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCompteItemTitle_description}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.description}"/>
+                        </p:column>
+
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+        </ui:define>
+
+    </ui:composition>
+</html>
